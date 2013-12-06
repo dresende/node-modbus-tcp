@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Modbus TCP/IP",
   "main": "lib/Modbus.js",
+  "repository"  : "http://github.com/dresende/node-modbus-tcp.git",
   "keywords": [
     "modbus",
     "tcp"
