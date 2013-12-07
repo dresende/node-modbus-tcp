@@ -20,7 +20,7 @@ for (var i = 0; i < tests.length; i++) {
 function addTest(description, data, result) {
 	describe(description, function () {
 		it("should pass", function (done) {
-			var stream = new modbus.WriteStream();
+			var stream = new modbus.ClientWriteStream();
 
 			stream.on("data", function (data) {
 				assert.deepEqual(data, result);

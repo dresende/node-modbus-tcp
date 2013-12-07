@@ -33,7 +33,7 @@ for (var i = 0; i < tests.length; i++) {
 function addTest(description, data, result) {
 	describe(description, function () {
 		it("should pass", function (done) {
-			var stream = new modbus.ReadStream();
+			var stream = new modbus.ClientReadStream();
 
 			stream.on("data", function (data) {
 				assert.deepEqual(data, result);
