@@ -1,5 +1,5 @@
-var modbus = require("../../");
-var assert = require("assert");
+var helpers = require("../helpers");
+var modbus  = require("../../");
 
 var tests = [
 	[
@@ -23,27 +23,8 @@ var tests = [
 ];
 
 for (var i = 0; i < tests.length; i++) {
-	addTest(
-		tests[i][0],
-		tests[i].slice(1, tests[i].length - 1),
-		tests[i][tests[i].length - 1]
-	);
-}
+	var desc = tests[i].shift();
+	var res  = tests[i].pop();
 
-function addTest(description, data, result) {
-	describe(description, function () {
-		it("should pass", function (done) {
-			var stream = new modbus.ClientReadStream();
-
-			stream.on("data", function (data) {
-				assert.deepEqual(data, result);
-
-				return done();
-			});
-
-			for (var i = 0; i < data.length; i++) {
-				stream.write(data[i]);
-			}
-		});
-	});
+	helpers.addStreamTest(modbus.ClientReadStream, desc, tests[i], res);
 }
