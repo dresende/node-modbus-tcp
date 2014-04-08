@@ -15,8 +15,8 @@ exports.server = function () {
 };
 
 exports.pipe = function (stream1, stream2) {
-	stream1.pipe(stream2.pipe());
-	stream2.pipe(stream1.pipe());
+	stream1.writer().pipe(stream2.reader());
+	stream2.writer().pipe(stream1.reader());
 };
 
 exports.randomBits = function () {
