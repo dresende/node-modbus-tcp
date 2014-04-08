@@ -1,24 +1,40 @@
-var assert = require("assert");
+var modbus  = require("../");
 
-exports.addStreamTest = function (stream, description, data, result) {
-	describe(description, function () {
-		it("should pass", function (done) {
-			var s = new stream();
+exports.modbus = modbus;
 
-			s.on("data", function (data) {
-				assert.deepEqual(data, result);
+exports.trials = function () {
+	return require("./run").trials();
+};
 
-				return done();
-			});
+exports.client = function () {
+	return new modbus.Client();
+};
 
+exports.server = function () {
+	return new modbus.Server();
+};
 
-			if (Array.isArray(data)) {
-				for (var i = 0; i < data.length; i++) {
-					s.write(data[i]);
-				}
-			} else {
-				s.write(data);
-			}
-		});
-	});
+exports.pipe = function (stream1, stream2) {
+	stream1.pipe(stream2.pipe());
+	stream2.pipe(stream1.pipe());
+};
+
+exports.randomBits = function () {
+	var bits = [];
+
+	for (var i = 0; i < 100; i++) {
+		bits.push(Math.random() > 0.5 ? 1 : 0);
+	}
+
+	return bits;
+};
+
+exports.randomBuffers = function () {
+	var bufs = [];
+
+	for (var i = 0; i < 100; i++) {
+		bufs.push(new Buffer(2));
+	}
+
+	return bufs;
 };

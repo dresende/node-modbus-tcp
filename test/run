@@ -1,0 +1,51 @@
+#!/usr/bin/env node
+var fs      = require("fs");
+var path    = require("path");
+var program = require("commander");
+
+program
+	.version("0.1.0")
+	.option("-t, --trials <n>", "Trials for each test (who support it)", 200, parseInt)
+	.option("-f, --functions <functions>", "Run only some function codes", "")
+	.option("-r, --reporter <reporter>", "Set test reporter", "progress")
+	.parse(process.argv);
+
+exports.trials = function () {
+	return program.trials;
+};
+
+program.functions = (program.functions.length ? program.functions.trim().split(/\s*,\s*/) : []);
+
+start();
+
+function start() {
+	var Mocha   = require("mocha");
+	var mocha   = new Mocha({
+		reporter: program.reporter
+	});
+	var location = path.normalize(path.join(__dirname, "integration"));
+	var added    = 0;
+
+	fs.readdirSync(location).filter(function (file) {
+		if (file.substr(-3) != '.js') {
+			return false;
+		}
+		if (program.functions.length) {
+			return (program.functions.indexOf(file.substr(0, file.length - 3)) >= 0);
+		}
+		return true;
+	}).forEach(function (file) {
+		mocha.addFile(path.join(location, file));
+
+		added += 1;
+	});
+
+	if (added === 0) {
+		process.stderr.write("No tests runned. Remove or broad your filters.\n");
+		process.exit(1);
+	}
+
+	mocha.run(function (failures) {
+		process.exit(failures);
+	});
+}
