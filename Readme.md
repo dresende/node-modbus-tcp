@@ -13,30 +13,20 @@ npm install modbus-tcp
 ## Example
 
 ```js
-var net    = require("net");
 var modbus = require("modbus-tcp");
-var reader = new modbus.ClientReadStream;
-var writer = new modbus.ClientWriteStream;
+var client = new modbus.Client();
+var server = new modbus.Server();
 
-var client = net.connect(502, "1.2.3,4");
-client.on("connect", function () {
-    // connect streams together (writer -> client -> reader)
-    client.pipe(reader);
-    writer.pipe(client);
+// link client and server streams together
+client.pipe(server.pipe());
+server.pipe(client.pipe());
 
-    reader.on("data", function (pkg) {
-        console.log(pkg); // { functionCode: ..., protocol: ... }
-    });
+server.on("read-coils", function (from, to, reply) {
+    return reply(null, [ 1, 0, 1, 1 ]);
+});
 
-    writer.write({
-        functionCode : modbus.FunctionCodes.HOLDING_REGISTERS,
-        data : [ 4, 0, 0, 0, 3 ] // 4 bytes, start 0x0000, length 0x0003
-    });
+// read coils from unit id = 0, from address 10 to 13
+client.readCoils(0, 10, 13, function (err, coils) {
+    // coils = [ 1, 0, 1, 1 ]
 });
 ```
-
-## TODO
-
-- Basic support of more functions, specially write functions
-- Support for exceptions
-- Support for server streams
