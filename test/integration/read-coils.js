@@ -14,7 +14,7 @@ server.on("read-coils", function (from, to, reply) {
 describe("READ_COILS", function () {
 	for (var i = 0; i < trials; i++) {
 		(function () {
-			var from = Math.max(1, Math.floor(Math.random() * coils.length / 2));
+			var from = Math.max(0, Math.floor(Math.random() * coils.length / 2));
 			var to   = Math.min(coils.length, from + Math.floor(Math.random() * coils.length / 2));
 
 			it("should pass (" + from + "-" + to + ")", function () {
