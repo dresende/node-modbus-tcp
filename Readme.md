@@ -33,7 +33,7 @@ client.readCoils(0, 10, 13, function (err, coils) {
 
 ## Client Methods
 
-All of the following read methods have the form `method(unitId, from, to, next)` and write methods have the form `method(unitId, addr, val, next)`.
+All of the following read methods have the form `method(unitId, from, to, next)` and write methods have the form `method(unitId, addr, val, next)`, where `next` is an **optional** function called if the server replies (with the same transactionId) to the sent message.
 
 - readCoils
 - readDiscreteInputs
