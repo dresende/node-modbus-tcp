@@ -18,8 +18,10 @@ var client = new modbus.Client();
 var server = new modbus.Server();
 
 // link client and server streams together
-client.pipe(server.pipe());
-server.pipe(client.pipe());
+client.writer().pipe(server.reader());
+server.writer().pipe(client.reader());
+// if you have a socket (stream) you can just
+// call client.pipe(socket) or server.pipe(socket)
 
 server.on("read-coils", function (from, to, reply) {
     return reply(null, [ 1, 0, 1, 1 ]);
