@@ -8,7 +8,7 @@ helpers.pipe(server, client);
 
 server.on("write-single-register", function (addr, val, reply) {
 	if (addr % 7 === 0) {
-		return reply(helpers.modbus.Exceptions.build(helpers.modbus.Exceptions.ILLEGAL_DATA_ADDRESS));
+		return reply(helpers.modbus.Exceptions("ILLEGAL_DATA_ADDRESS"));
 	}
 	return reply();
 });

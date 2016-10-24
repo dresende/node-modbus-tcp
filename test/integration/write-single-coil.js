@@ -8,7 +8,7 @@ helpers.pipe(server, client);
 
 server.on("write-single-coil", function (addr, val, reply) {
 	if (addr % 3 === 0) {
-		return reply(helpers.modbus.Exceptions.build(helpers.modbus.Exceptions.ILLEGAL_DATA_ADDRESS));
+		return reply(helpers.modbus.Exceptions("ILLEGAL_DATA_ADDRESS"));
 	}
 	return reply();
 });
