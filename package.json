@@ -7,7 +7,7 @@
   "keywords"        : [ "modbus", "stream", "tcp" ],
   "scripts"         : { "test": "node test/run" },
   "devDependencies" : {
-    "mocha"     : "3.1.0",
+    "mocha"     : "3.1.2",
     "commander" : "2.9.0"
   },
   "author"  : "Diogo Resende <dresende@thinkdigital.pt>",
