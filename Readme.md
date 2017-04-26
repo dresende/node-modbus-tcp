@@ -4,6 +4,10 @@
 
 This is a very simple module that uses NodeJS Streams2 to read Modbus TCP data and convert it to JSON and vice-versa.
 
+## Upgrade
+
+If you're just starting or just trying to use this library, I advise you to try [modbus-stream](http://github.com/dresende/node-modbus-stream). It's more complete (it supports all standard function codes) and it was designed to work with TCP, RTU and ASCII modes.
+
 ## Install
 
 ```sh
